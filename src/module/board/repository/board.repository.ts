@@ -12,14 +12,14 @@ export class BoardRepository {
 
   async findAll(): Promise<Board[]> {
     return await this.repository.find({
-      relations: { columns: true }
+      relations: { columns: { cards: true } },
     });
   }
 
   async findOneById(id: string): Promise<Board> {
     const board = await this.repository.findOne({
       where: { id },
-      relations: { columns: true }
+      relations: { columns: { cards: true } },
     });
 
     if (!board) {

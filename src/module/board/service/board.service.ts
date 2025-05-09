@@ -4,12 +4,14 @@ import { Board } from "../entity/board.entity";
 import { BoardMapper } from "../mapper/board.mapper";
 import { CreateBoardDto } from "../dto/create-board.dto";
 import { UpdateBoardDto } from "../dto/update-board.dto";
+import { BoardGateway } from "../gateway/board.gateway";
 
 @Injectable()
 export class BoardService {
   constructor(
     private readonly boardRepository: BoardRepository,
     private readonly boardMapper: BoardMapper,
+    private boardGateway: BoardGateway,
   ) { }
 
   async findAll(): Promise<Board[]> {
@@ -22,11 +24,17 @@ export class BoardService {
 
   async create(createBoardDto: CreateBoardDto): Promise<Board> {
     const mappedBoard = this.boardMapper.fromDtoToEntity(createBoardDto);
+
+    this.boardGateway.emitBoardUpdated(mappedBoard);
+
     return await this.boardRepository.create(mappedBoard);
   }
 
   async update(id: string, updateBoardDto: UpdateBoardDto): Promise<Board> {
     const mappedBoard = this.boardMapper.fromDtoToEntity(updateBoardDto);
+
+    this.boardGateway.emitBoardUpdated(mappedBoard);
+
     return await this.boardRepository.update(id, mappedBoard);
   }
 

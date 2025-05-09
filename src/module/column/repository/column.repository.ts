@@ -10,11 +10,14 @@ export class ColumnRepository {
     private readonly repository: Repository<Column>
   ) { }
 
-  async findAll(): Promise<Column[]> {
+  async findAll(boardId?: string): Promise<Column[]> {
+    const where = boardId ? { board: { id: boardId } } : {};
+  
     return await this.repository.find({
-      relations: { cards: true }
+      where,
+      relations: { cards: true },
     });
-  }
+  }  
 
   async findOneById(id: string): Promise<Column> {
     const column = await this.repository.findOne({

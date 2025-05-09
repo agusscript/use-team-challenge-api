@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from "@nestjs/common";
 import { ColumnService } from "../service/column.service";
 import { Column } from "../entity/column.entity";
 import { CreateColumnDto } from "../dto/create-column.dto";
@@ -9,8 +9,10 @@ export class ColumnController {
   constructor(private readonly columnService: ColumnService) { }
 
   @Get()
-  async findAll(): Promise<Column[]> {
-    return this.columnService.findAll();
+  async getAll(
+    @Query('boardId') boardId?: string
+  ): Promise<Column[]> {
+    return await this.columnService.findAll(boardId);
   }
 
   @Get(":id")

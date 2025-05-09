@@ -9,13 +9,8 @@ export class CreateCardDto {
 
   @IsString()
   @IsOptional()
-  @MinLength(2)
   @MaxLength(600)
   description?: string;
-
-  @IsNumber()
-  @IsNotEmpty()
-  position: number;
 
   @IsUUID()
   @IsNotEmpty()

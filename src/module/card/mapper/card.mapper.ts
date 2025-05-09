@@ -14,7 +14,6 @@ export class CardMapper {
 
     card.title = cardDto.title;
     card.description = cardDto.description;
-    card.position = cardDto.position;
     card.column = column;
 
     return card;

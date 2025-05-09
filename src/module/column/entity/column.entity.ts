@@ -6,7 +6,6 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn
 } from "typeorm";
 import { Board } from "src/module/board/entity/board.entity";
 import { Card } from "src/module/card/entity/card.entity";
@@ -18,9 +17,6 @@ export class Column {
 
   @ColumnDecorator()
   title: string;
-
-  @ColumnDecorator()
-  position: number;
 
   @ManyToOne(() => Board, board => board.columns, {
     nullable: false,

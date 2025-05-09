@@ -7,10 +7,6 @@ export class CreateColumnDto {
   @MaxLength(255)
   title: string;
 
-  @IsNumber()
-  @IsNotEmpty()
-  position: number;
-
   @IsUUID()
   @IsNotEmpty()
   boardId: string;

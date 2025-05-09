@@ -13,7 +13,6 @@ export class ColumnMapper {
     const column = new Column();
 
     column.title = createColumnDto.title;
-    column.position = createColumnDto.position;
     column.board = board;
 
     return column;
@@ -25,7 +24,6 @@ export class ColumnMapper {
     const column = new Column();
 
     column.title = updateColumnDto.title;
-    column.position = updateColumnDto.position;
 
     return column;
   }

@@ -20,9 +20,6 @@ export class Card {
   @ColumnDecorator({ type: 'text', nullable: true })
   description: string;
 
-  @ColumnDecorator()
-  position: number;
-
   @ManyToOne(() => Column, column => column.cards, {
     nullable: false,
     onDelete: 'CASCADE'

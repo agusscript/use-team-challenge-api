@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from "@nestjs/common";
 import { CardService } from "../service/card.service";
 import { Card } from "../entity/card.entity";
 import { CreateCardDto } from "../dto/create-card.dto";
@@ -9,8 +9,10 @@ export class CardController {
   constructor(private readonly cardService: CardService) { }
 
   @Get()
-  async findAll(): Promise<Card[]> {
-    return this.cardService.findAll();
+  async getAll(
+    @Query('columnId') columnId?: string
+  ): Promise<Card[]> {
+    return await this.cardService.findAll(columnId);
   }
 
   @Get(":id")
@@ -35,5 +37,20 @@ export class CardController {
   @Delete(":id")
   async delete(@Param("id") id: string): Promise<void> {
     return this.cardService.delete(id);
+  }
+
+  @Post(':id/move')
+  moveCard(
+    @Param('id') id: string,
+    @Body() moveCardDto: { 
+      sourceColumnId: string; 
+      destinationColumnId: string;
+    }
+  ) {
+    return this.cardService.moveCard(
+      id,
+      moveCardDto.sourceColumnId,
+      moveCardDto.destinationColumnId
+    );
   }
 }

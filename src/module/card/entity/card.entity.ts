@@ -5,7 +5,6 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn,
 } from 'typeorm';
 import { Column } from 'src/module/column/entity/column.entity';
 

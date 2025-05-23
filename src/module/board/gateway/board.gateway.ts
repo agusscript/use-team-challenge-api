@@ -50,13 +50,10 @@ export class BoardGateway {
   @SubscribeMessage('card:add')
   async handleCardAdd(@MessageBody() data: { title: string, description: string, columnId: string }) {
     try {
-      console.log('Añadiendo tarjeta:', data);
+      console.info('Añadiendo tarjeta:', data);
+      this.emitCardAdded(data, data.columnId);
 
-      const newCard = await this.cardService.create(data);
-
-      this.emitCardAdded(newCard, data.columnId);
-
-      return { success: true, card: newCard };
+      return { success: true, card: data };
     } catch (error) {
       console.error('Error al añadir tarjeta:', error);
       return { success: false, error: error.message };
@@ -66,13 +63,10 @@ export class BoardGateway {
   @SubscribeMessage('card:update')
   async handleCardUpdate(@MessageBody() data: { cardId: string, columnId: string, data: any }) {
     try {
-      console.log('Actualizando tarjeta:', data);
-
-      const updatedCard = await this.cardService.update(data.cardId, data.data);
-
+      console.info('Actualizando tarjeta:', data);
       this.emitCardUpdated(data.cardId, data.columnId, data.data);
 
-      return { success: true, card: updatedCard };
+      return { success: true, card: data };
     } catch (error) {
       console.error('Error al actualizar tarjeta:', error);
       return { success: false, error: error.message };
@@ -82,10 +76,7 @@ export class BoardGateway {
   @SubscribeMessage('card:remove')
   async handleCardRemove(@MessageBody() data: { cardId: string, columnId: string }) {
     try {
-      console.log('Eliminando tarjeta:', data);
-
-      await this.cardService.delete(data.cardId);
-
+      console.info('Eliminando tarjeta:', data);
       this.emitCardRemoved(data.cardId, data.columnId);
 
       return { success: true };
@@ -102,7 +93,7 @@ export class BoardGateway {
     destinationColumnId: string
   }) {
     try {
-      console.log('Moviendo tarjeta:', data);
+      console.info('Moviendo tarjeta:', data);
 
       await this.cardService.moveCard(
         data.cardId,
@@ -122,13 +113,10 @@ export class BoardGateway {
   @SubscribeMessage('column:add')
   async handleColumnAdd(@MessageBody() data: { title: string, boardId: string }) {
     try {
-      console.log('Añadiendo columna:', data);
+      console.info('Añadiendo columna:', data);
+      this.emitColumnAdded(data);
 
-      const newColumn = await this.columnService.create(data);
-
-      this.emitColumnAdded(newColumn);
-
-      return { success: true, column: newColumn };
+      return { success: true, column: data };
     } catch (error) {
       console.error('Error al añadir columna:', error);
       return { success: false, error: error.message };
@@ -138,13 +126,10 @@ export class BoardGateway {
   @SubscribeMessage('column:update')
   async handleColumnUpdate(@MessageBody() data: { columnId: string, title: string }) {
     try {
-      console.log('Actualizando columna:', data);
-
-      const updatedColumn = await this.columnService.update(data.columnId, { title: data.title });
-
+      console.info('Actualizando columna:', data);
       this.emitColumnUpdated(data.columnId, data.title);
 
-      return { success: true, column: updatedColumn };
+      return { success: true, column: data };
     } catch (error) {
       console.error('Error al actualizar columna:', error);
       return { success: false, error: error.message };
@@ -154,10 +139,7 @@ export class BoardGateway {
   @SubscribeMessage('column:remove')
   async handleColumnRemove(@MessageBody() data: { columnId: string }) {
     try {
-      console.log('Eliminando columna:', data);
-
-      await this.columnService.delete(data.columnId);
-
+      console.info('Eliminando columna:', data);
       this.emitColumnRemoved(data.columnId);
 
       return { success: true };
@@ -168,10 +150,10 @@ export class BoardGateway {
   }
 
   handleConnection(client: any) {
-    console.log(`Cliente conectado: ${client.id}`);
+    console.info(`Cliente conectado: ${client.id}`);
   }
 
   handleDisconnect(client: any) {
-    console.log(`Cliente desconectado: ${client.id}`);
+    console.info(`Cliente desconectado: ${client.id}`);
   }
 }

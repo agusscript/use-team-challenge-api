@@ -48,12 +48,12 @@ export class BoardGateway {
   @SubscribeMessage('card:add')
   async handleCardAdd(@MessageBody() data: { title: string, description: string, columnId: string }) {
     try {
-      console.info('Añadiendo tarjeta:', data);
+      console.info('Card added:', data);
       this.emitCardAdded(data, data.columnId);
 
       return { success: true, card: data };
     } catch (error) {
-      console.error('Error al añadir tarjeta:', error);
+      console.error('Error adding card:', error);
       return { success: false, error: error.message };
     }
   }
@@ -61,12 +61,12 @@ export class BoardGateway {
   @SubscribeMessage('card:update')
   async handleCardUpdate(@MessageBody() data: { cardId: string, columnId: string, data: any }) {
     try {
-      console.info('Actualizando tarjeta:', data);
+      console.info('Card updated:', data);
       this.emitCardUpdated(data.cardId, data.columnId, data.data);
 
       return { success: true, card: data };
     } catch (error) {
-      console.error('Error al actualizar tarjeta:', error);
+      console.error('Error updating card:', error);
       return { success: false, error: error.message };
     }
   }
@@ -74,12 +74,12 @@ export class BoardGateway {
   @SubscribeMessage('card:remove')
   async handleCardRemove(@MessageBody() data: { cardId: string, columnId: string }) {
     try {
-      console.info('Eliminando tarjeta:', data);
+      console.info('Card removed:', data);
       this.emitCardRemoved(data.cardId, data.columnId);
 
       return { success: true };
     } catch (error) {
-      console.error('Error al eliminar tarjeta:', error);
+      console.error('Error removing card:', error);
       return { success: false, error: error.message };
     }
   }
@@ -91,7 +91,7 @@ export class BoardGateway {
     destinationColumnId: string
   }) {
     try {
-      console.info('Moviendo tarjeta:', data);
+      console.info('Card moved:', data);
 
       await this.cardService.moveCard(
         data.cardId,
@@ -103,7 +103,7 @@ export class BoardGateway {
 
       return { success: true };
     } catch (error) {
-      console.error('Error al mover tarjeta:', error);
+      console.error('Error moving card:', error);
       return { success: false, error: error.message };
     }
   }
@@ -111,12 +111,12 @@ export class BoardGateway {
   @SubscribeMessage('column:add')
   async handleColumnAdd(@MessageBody() data: { title: string, boardId: string }) {
     try {
-      console.info('Añadiendo columna:', data);
+      console.info('Column added:', data);
       this.emitColumnAdded(data);
 
       return { success: true, column: data };
     } catch (error) {
-      console.error('Error al añadir columna:', error);
+      console.error('Error adding column:', error);
       return { success: false, error: error.message };
     }
   }
@@ -124,12 +124,12 @@ export class BoardGateway {
   @SubscribeMessage('column:update')
   async handleColumnUpdate(@MessageBody() data: { columnId: string, title: string }) {
     try {
-      console.info('Actualizando columna:', data);
+      console.info('Column updated:', data);
       this.emitColumnUpdated(data.columnId, data.title);
 
       return { success: true, column: data };
     } catch (error) {
-      console.error('Error al actualizar columna:', error);
+      console.error('Error updating column:', error);
       return { success: false, error: error.message };
     }
   }
@@ -137,12 +137,12 @@ export class BoardGateway {
   @SubscribeMessage('column:remove')
   async handleColumnRemove(@MessageBody() data: { columnId: string }) {
     try {
-      console.info('Eliminando columna:', data);
+      console.info('Column removed:', data);
       this.emitColumnRemoved(data.columnId);
 
       return { success: true };
     } catch (error) {
-      console.error('Error al eliminar columna:', error);
+      console.error('Error removing column:', error);
       return { success: false, error: error.message };
     }
   }

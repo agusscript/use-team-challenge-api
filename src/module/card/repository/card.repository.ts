@@ -21,6 +21,7 @@ export class CardRepository {
   async findOneById(id: string): Promise<Card> {
     const card = await this.repository.findOne({
       where: { id },
+      relations: { column: true },
     });
 
     if (!card) {

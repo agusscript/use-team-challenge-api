@@ -2,7 +2,6 @@ import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from
 import { Server } from "socket.io";
 import { Injectable } from "@nestjs/common";
 import { CardService } from "src/module/card/service/card.service";
-import { ColumnService } from "src/module/column/service/column.service";
 
 @Injectable()
 @WebSocketGateway({ cors: { origin: '*' } })
@@ -12,7 +11,6 @@ export class BoardGateway {
 
   constructor(
     private readonly cardService: CardService,
-    private readonly columnService: ColumnService,
   ) { }
 
   emitCardAdded(card: any, columnId: string) {
